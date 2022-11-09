@@ -4,21 +4,18 @@ import { TextInput, Button } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ColumnInput from "../components/transaction-add/ColumnInput";
+import useTransactionStore, { Transaction } from "../store/transaction.store";
+import { RootStackScreenProps } from "../types";
 
-interface TransactionFormData {
-  date: Date;
-  account: string;
-  category: string;
-  subCategory: string;
-  title: string;
-  amount: number;
-}
+export default function TransactionAddScreen({
+  navigation,
+}: RootStackScreenProps<"TransactionAdd">) {
+  const addTransaction = useTransactionStore((state) => state.addTransaction);
 
-export default function TransactionAddScreen() {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { isValid, errors },
   } = useForm({
     defaultValues: {
       date: new Date(),
@@ -29,7 +26,11 @@ export default function TransactionAddScreen() {
       title: "",
     },
   });
-  const onSubmit = (data: TransactionFormData) => console.log(data);
+
+  const onSubmit = (data: Transaction) => {
+    addTransaction(data);
+    navigation.goBack();
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -40,7 +41,17 @@ export default function TransactionAddScreen() {
             required: true,
           }}
           render={({ field: { onChange, value } }) => (
-            <DateTimePicker value={value} onChange={onChange} />
+            <DateTimePicker
+              value={value}
+              onChange={(data) => {
+                console.log(
+                  "🚀 ~ file: TransactionAddScreen.tsx ~ line 54 ~ data",
+                  data.nativeEvent.timestamp
+                );
+                if (data.nativeEvent.timestamp)
+                  onChange(new Date(data.nativeEvent.timestamp));
+              }}
+            />
           )}
           name="date"
         />
@@ -138,7 +149,11 @@ export default function TransactionAddScreen() {
       </ColumnInput>
 
       <View>
-        <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+        <Button
+          title="Submit"
+          onPress={handleSubmit(onSubmit)}
+          disabled={!isValid}
+        />
       </View>
     </ScrollView>
   );

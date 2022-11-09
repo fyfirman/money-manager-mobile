@@ -1,13 +1,16 @@
-import { Button, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { Text } from "../components/Themed";
 
 import TransactionHeaderRow from "../components/transaction-list/TransactionHeaderRow";
 import TransactionRow from "../components/transaction-list/TransactionRow";
+import useTransactionStore from "../store/transaction.store";
 import { RootTabScreenProps } from "../types";
 
 export default function TabOneScreen({
   navigation,
 }: RootTabScreenProps<"TabOne">) {
+  const transactions = useTransactionStore((state) => state.transactions);
+
   const handleAddButtonPress = () => {
     navigation.navigate("TransactionAdd");
   };
@@ -66,6 +69,7 @@ export default function TabOneScreen({
           subCategory="Parkir"
           title="Parkir Pejaten Village"
         />
+        <Text>Transaction length: {transactions.length}</Text>
       </ScrollView>
       <TouchableOpacity style={styles.fabButton} onPress={handleAddButtonPress}>
         <Text style={styles.fabText}>+</Text>
