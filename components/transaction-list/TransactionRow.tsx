@@ -22,7 +22,7 @@ const TransactionRow = ({
 }: TransactionRowProps) => {
   return (
     <View style={[styles.container, style]}>
-      <View>
+      <View style={styles.categoryColumn}>
         <Text>{category}</Text>
         <Text>{subCategory}</Text>
       </View>
@@ -42,6 +42,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: 16,
     paddingVertical: 4,
+  },
+  categoryColumn: {
+    width: "25%",
   },
   titleColumn: {
     flex: 1,

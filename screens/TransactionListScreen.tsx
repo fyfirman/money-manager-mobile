@@ -1,3 +1,4 @@
+import React from "react";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { Text } from "../components/Themed";
 
@@ -9,7 +10,9 @@ import { RootTabScreenProps } from "../types";
 export default function TabOneScreen({
   navigation,
 }: RootTabScreenProps<"TabOne">) {
-  const transactions = useTransactionStore((state) => state.transactions);
+  const transactionListGroupByDate = useTransactionStore((state) =>
+    state.getTransactionsGroupByDate()
+  );
 
   const handleAddButtonPress = () => {
     navigation.navigate("TransactionAdd");
@@ -18,58 +21,25 @@ export default function TabOneScreen({
   return (
     <>
       <ScrollView style={styles.container}>
-        <TransactionHeaderRow
-          date={new Date(2022, 11, 9)}
-          expenseAmount={4000}
-        />
-        <TransactionRow
-          account="E-Money"
-          amount={4000}
-          category="Transporation"
-          subCategory="Parkir"
-          title="Parkir Pejaten Village"
-        />
-        <TransactionRow
-          account="E-Money"
-          amount={4000}
-          category="Transporation"
-          subCategory="Parkir"
-          title="Parkir Pejaten Village"
-        />
-        <TransactionRow
-          account="E-Money"
-          amount={4000}
-          category="Transporation"
-          subCategory="Parkir"
-          title="Parkir Pejaten Village"
-        />
-        <TransactionHeaderRow
-          date={new Date(2022, 11, 8)}
-          expenseAmount={4000}
-          style={{ marginTop: 8 }}
-        />
-        <TransactionRow
-          account="E-Money"
-          amount={4000}
-          category="Transporation"
-          subCategory="Parkir"
-          title="Parkir Pejaten Village"
-        />
-        <TransactionRow
-          account="E-Money"
-          amount={4000}
-          category="Transporation"
-          subCategory="Parkir"
-          title="Parkir Pejaten Village"
-        />
-        <TransactionRow
-          account="E-Money"
-          amount={4000}
-          category="Transporation"
-          subCategory="Parkir"
-          title="Parkir Pejaten Village"
-        />
-        <Text>Transaction length: {transactions.length}</Text>
+        {Object.keys(transactionListGroupByDate).map((date, index) => (
+          <React.Fragment key={date}>
+            <TransactionHeaderRow
+              date={new Date(date)}
+              expenseAmount={0}
+              style={{ marginTop: index > 0 ? 8 : 0 }}
+            />
+            {transactionListGroupByDate[date].map((transaction, index) => (
+              <TransactionRow
+                key={date + "-" + index}
+                account={transaction.account}
+                amount={transaction.amount}
+                category={transaction.category}
+                subCategory={transaction.subCategory}
+                title={transaction.title}
+              />
+            ))}
+          </React.Fragment>
+        ))}
       </ScrollView>
       <TouchableOpacity style={styles.fabButton} onPress={handleAddButtonPress}>
         <Text style={styles.fabText}>+</Text>
