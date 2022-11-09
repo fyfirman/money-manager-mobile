@@ -8,6 +8,10 @@ import { RootTabScreenProps } from "../types";
 export default function TabOneScreen({
   navigation,
 }: RootTabScreenProps<"TabOne">) {
+  const handleAddButtonPress = () => {
+    navigation.navigate("TransactionAdd");
+  };
+
   return (
     <>
       <ScrollView style={styles.container}>
@@ -63,7 +67,7 @@ export default function TabOneScreen({
           title="Parkir Pejaten Village"
         />
       </ScrollView>
-      <TouchableOpacity style={styles.fabButton}>
+      <TouchableOpacity style={styles.fabButton} onPress={handleAddButtonPress}>
         <Text style={styles.fabText}>+</Text>
       </TouchableOpacity>
     </>
