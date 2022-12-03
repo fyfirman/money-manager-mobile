@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import React from "react";
-import { Text, View, ViewProps } from "../Themed";
+import { Text, TouchableOpacity, TouchableOpacityProps, View } from "../Themed";
 import { currencyFormat } from "../../helpers/string-helper";
 
 interface TransactionRowProps {
@@ -9,7 +9,8 @@ interface TransactionRowProps {
   amount: number;
   account: string;
   title: string;
-  style?: ViewProps["style"];
+  style?: TouchableOpacityProps["style"];
+  onPress?: TouchableOpacityProps["onPress"];
 }
 
 const TransactionRow = ({
@@ -19,9 +20,10 @@ const TransactionRow = ({
   subCategory,
   title,
   style,
+  onPress,
 }: TransactionRowProps) => {
   return (
-    <View style={[styles.container, style]}>
+    <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
       <View style={styles.categoryColumn}>
         <Text>{category}</Text>
         <Text>{subCategory}</Text>
@@ -31,7 +33,7 @@ const TransactionRow = ({
         <Text>{account}</Text>
       </View>
       <Text>{currencyFormat(amount)}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

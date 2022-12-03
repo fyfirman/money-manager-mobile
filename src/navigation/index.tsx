@@ -26,7 +26,7 @@ import {
   RootTabScreenProps,
 } from "../../types";
 import LinkingConfiguration from "./LinkingConfiguration";
-import TransactionAddScreen from "../screens/TransactionAddScreen";
+import TransactionAddScreen from "../screens/TransactionAddEditScreen";
 
 export default function Navigation({
   colorScheme,
@@ -63,9 +63,14 @@ function RootNavigator() {
         options={{ title: "Oops!" }}
       />
       <Stack.Screen
-        name="TransactionAdd"
+        name="TransactionAddEdit"
         component={TransactionAddScreen}
-        options={{ title: "Add Transaction" }}
+        options={({ route }) => ({
+          title:
+            route.params.type === "edit"
+              ? "Edit Transaction"
+              : "Add Transaction",
+        })}
       />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />

@@ -4,7 +4,7 @@ import { Text, TouchableOpacity } from "../components/Themed";
 
 import TransactionHeaderRow from "../components/transaction-list/TransactionHeaderRow";
 import TransactionRow from "../components/transaction-list/TransactionRow";
-import useTransactionStore from "../store/transaction.store";
+import useTransactionStore, { Transaction } from "../store/transaction.store";
 import { RootTabScreenProps } from "../../types";
 
 export default function TabOneScreen({
@@ -15,11 +15,15 @@ export default function TabOneScreen({
   );
 
   const handleAddButtonPress = () => {
-    navigation.navigate("TransactionAdd");
+    navigation.navigate("TransactionAddEdit", { type: "add" });
   };
 
   const handleHeaderRowPress = (date: string) => {
-    navigation.navigate("TransactionAdd", { date });
+    navigation.navigate("TransactionAddEdit", { type: "add", date });
+  };
+
+  const handleItemPress = (transaction: Transaction) => {
+    navigation.navigate("TransactionAddEdit", { type: "edit", ...transaction });
   };
 
   return (
@@ -33,16 +37,19 @@ export default function TabOneScreen({
               style={{ marginTop: index > 0 ? 8 : 0 }}
               onPress={() => handleHeaderRowPress(date)}
             />
-            {transactionListGroupByDate[date].map((transaction, index) => (
-              <TransactionRow
-                key={date + "-" + index}
-                account={transaction.account}
-                amount={transaction.amount}
-                category={transaction.category}
-                subCategory={transaction.subCategory}
-                title={transaction.title}
-              />
-            ))}
+            {transactionListGroupByDate[date].map((transaction, index) => {
+              return (
+                <TransactionRow
+                  key={date + "-" + index}
+                  account={transaction.account}
+                  amount={transaction.amount}
+                  category={transaction.category}
+                  subCategory={transaction.subCategory}
+                  title={transaction.title}
+                  onPress={() => handleItemPress(transaction)}
+                />
+              );
+            })}
           </React.Fragment>
         ))}
       </ScrollView>

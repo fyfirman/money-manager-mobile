@@ -6,13 +6,14 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import ColumnInput from "../components/transaction-add/ColumnInput";
 import useTransactionStore, { Transaction } from "../store/transaction.store";
 import { RootStackScreenProps } from "../../types";
-import Autocomplete from "../components/StyledAutocomplete";
 import AutocompleteField from "../components/autocomplete-field/AutocompleteField";
 
-export default function TransactionAddScreen({
+export default function TransactionAddEditScreen({
   navigation,
   route,
-}: RootStackScreenProps<"TransactionAdd">) {
+}: RootStackScreenProps<"TransactionAddEdit">) {
+  const pageType = route.params.type;
+
   const addTransaction = useTransactionStore((state) => state.addTransaction);
   const listedCategory = useTransactionStore((state) =>
     state.getListedCategory()
@@ -28,16 +29,20 @@ export default function TransactionAddScreen({
   } = useForm({
     defaultValues: {
       date: !route.params?.date ? new Date() : new Date(route.params.date),
-      account: "",
-      category: "",
-      subCategory: "",
-      amount: 0,
-      title: "",
+      account: route.params?.account ?? "",
+      category: route.params?.category ?? "",
+      subCategory: route.params?.subCategory ?? "",
+      amount: route.params?.amount ?? 0,
+      title: route.params?.title ?? "",
     },
   });
 
   const onSubmit = (data: Transaction) => {
-    addTransaction(data);
+    if (pageType === "add") {
+      addTransaction(data);
+    } else {
+      // TODO: edit
+    }
     navigation.goBack();
   };
 
@@ -121,8 +126,8 @@ export default function TransactionAddScreen({
             <TextInput
               style={styles.input}
               onBlur={onBlur}
-              onChangeText={onChange}
-              value={value as unknown as string}
+              onChangeText={(e) => onChange(parseInt(e, 10))}
+              value={String(value)}
               placeholder="Amount"
               keyboardType="number-pad"
             />

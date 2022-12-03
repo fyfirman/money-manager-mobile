@@ -9,6 +9,7 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { Transaction } from "./src/store/transaction.store";
 
 declare global {
   namespace ReactNavigation {
@@ -21,7 +22,9 @@ export type RootStackParamList = {
   Modal: undefined;
   NotFound: undefined;
   TransactionList: undefined;
-  TransactionAdd: { date: string } | undefined;
+  TransactionAddEdit: {
+    type: "add" | "edit";
+  } & Partial<Transaction> || undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
