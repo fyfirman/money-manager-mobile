@@ -4,7 +4,7 @@ import { Text, TouchableOpacity } from "../components/Themed";
 
 import TransactionHeaderRow from "../components/transaction-list/TransactionHeaderRow";
 import TransactionRow from "../components/transaction-list/TransactionRow";
-import useTransactionStore from "../../store/transaction.store";
+import useTransactionStore from "../store/transaction.store";
 import { RootTabScreenProps } from "../../types";
 
 export default function TabOneScreen({
