@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet } from "react-native";
-import { View } from "../components/Themed";
-import { TextInput, Button } from "react-native";
+import { View, TextInput } from "../components/Themed";
+import { Button } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ColumnInput from "../components/transaction-add/ColumnInput";
