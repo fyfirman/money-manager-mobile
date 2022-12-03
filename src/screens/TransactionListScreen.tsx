@@ -1,6 +1,6 @@
 import React from "react";
-import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
-import { Text } from "../components/Themed";
+import { ScrollView, StyleSheet } from "react-native";
+import { Text, TouchableOpacity } from "../components/Themed";
 
 import TransactionHeaderRow from "../components/transaction-list/TransactionHeaderRow";
 import TransactionRow from "../components/transaction-list/TransactionRow";
@@ -59,7 +59,8 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: "white",
+    borderColor: "white",
+    borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
     elevation: 4,
