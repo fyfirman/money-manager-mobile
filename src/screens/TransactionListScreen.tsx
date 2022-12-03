@@ -18,7 +18,7 @@ export default function TabOneScreen({
     navigation.navigate("TransactionAdd");
   };
 
-  const handleHeaderRowPress = (date: Date) => {
+  const handleHeaderRowPress = (date: string) => {
     navigation.navigate("TransactionAdd", { date });
   };
 
@@ -28,10 +28,10 @@ export default function TabOneScreen({
         {Object.keys(transactionListGroupByDate).map((date, index) => (
           <React.Fragment key={date}>
             <TransactionHeaderRow
-              date={new Date(date)}
+              date={date}
               expenseAmount={0}
               style={{ marginTop: index > 0 ? 8 : 0 }}
-              onPress={() => handleHeaderRowPress(new Date(date))}
+              onPress={() => handleHeaderRowPress(date)}
             />
             {transactionListGroupByDate[date].map((transaction, index) => (
               <TransactionRow

@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet } from "react-native";
-import { View, TextInput, Text, TouchableOpacity } from "../components/Themed";
+import { View, TextInput } from "../components/Themed";
 import { Button } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -14,6 +14,12 @@ export default function TransactionAddScreen({
   route,
 }: RootStackScreenProps<"TransactionAdd">) {
   const addTransaction = useTransactionStore((state) => state.addTransaction);
+  const listedCategory = useTransactionStore((state) =>
+    state.getListedCategory()
+  );
+  const listedSubCategory = useTransactionStore((state) =>
+    state.getListedSubCategory()
+  );
 
   const {
     control,
@@ -21,7 +27,7 @@ export default function TransactionAddScreen({
     formState: { isValid, errors },
   } = useForm({
     defaultValues: {
-      date: route.params?.date || new Date(),
+      date: !route.params?.date ? new Date() : new Date(route.params.date),
       account: "",
       category: "",
       subCategory: "",
@@ -83,7 +89,7 @@ export default function TransactionAddScreen({
             <AutocompleteField
               field={field}
               placeholder="Category"
-              options={["Food", "Transport", "Entertainment"]}
+              options={listedCategory}
             />
           )}
           name="category"
@@ -95,13 +101,11 @@ export default function TransactionAddScreen({
           rules={{
             required: true,
           }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value as string}
+          render={({ field }) => (
+            <AutocompleteField
+              field={field}
               placeholder="Sub Category"
+              options={listedSubCategory}
             />
           )}
           name="subCategory"

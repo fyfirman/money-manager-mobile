@@ -21,7 +21,7 @@ export type RootStackParamList = {
   Modal: undefined;
   NotFound: undefined;
   TransactionList: undefined;
-  TransactionAdd: { date: Date } | undefined;
+  TransactionAdd: { date: string } | undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

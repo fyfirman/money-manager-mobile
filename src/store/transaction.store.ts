@@ -18,6 +18,8 @@ interface TransactionState {
   transactions: Transaction[];
   addTransaction: (transaction: Transaction) => void;
   getTransactionsGroupByDate: () => TransactionListGroupByDate;
+  getListedCategory: () => Transaction['category'][];
+  getListedSubCategory: () => Transaction['subCategory'][];
 }
 
 const dummyTransactions: Transaction[] = [
@@ -70,7 +72,15 @@ const useTransactionStore = create<TransactionState>()(persist((set, get) => ({
       acc[date].push(transaction);
       return acc;
     }, {} as TransactionListGroupByDate)
-  } 
+  },
+  getListedCategory: () => {
+    const transactions = get().transactions;
+    return [...new Set(transactions.map(transaction => transaction.category))];
+  },
+  getListedSubCategory: () => {
+    const transactions = get().transactions;
+    return [...new Set(transactions.map(transaction => transaction.subCategory))];
+  },
 }), {
   name: 'transaction-store',
   getStorage: () => AsyncStorage,

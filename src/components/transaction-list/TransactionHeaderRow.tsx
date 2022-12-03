@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { currencyFormat } from "../../helpers/string-helper";
 
 interface TransactionHeaderRowProps {
-  date: Date;
+  date: string; // Date in ISO format
   expenseAmount: number;
   style?: TouchableOpacityProps["style"];
   onPress?: TouchableOpacityProps["onPress"];
@@ -20,7 +20,9 @@ const TransactionHeaderRow = ({
   return (
     <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
       <View style={styles.dateContainer}>
-        <Text style={styles.dateText}>{format(date, "EEE, dd MMM yy")}</Text>
+        <Text style={styles.dateText}>
+          {format(new Date(date), "EEE, dd MMM yy")}
+        </Text>
       </View>
       <Text>{currencyFormat(expenseAmount)}</Text>
     </TouchableOpacity>

@@ -22,7 +22,7 @@ const AutocompleteField = ({
 
   const handleOptionPress = (option: string) => {
     setValue(option);
-    setOpen(false);
+    setFilteredOptions([]);
   };
 
   const handleInputChange = (input: string) => {
