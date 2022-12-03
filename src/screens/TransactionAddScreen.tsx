@@ -1,11 +1,13 @@
 import { ScrollView, StyleSheet } from "react-native";
-import { View, TextInput } from "../components/Themed";
+import { View, TextInput, Text, TouchableOpacity } from "../components/Themed";
 import { Button } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ColumnInput from "../components/transaction-add/ColumnInput";
 import useTransactionStore, { Transaction } from "../store/transaction.store";
 import { RootStackScreenProps } from "../../types";
+import Autocomplete from "../components/StyledAutocomplete";
+import AutocompleteField from "../components/autocomplete-field/AutocompleteField";
 
 export default function TransactionAddScreen({
   navigation,
@@ -45,10 +47,6 @@ export default function TransactionAddScreen({
             <DateTimePicker
               value={value}
               onChange={(data) => {
-                console.log(
-                  "🚀 ~ file: TransactionAddScreen.tsx ~ line 54 ~ data",
-                  data.nativeEvent.timestamp
-                );
                 if (data.nativeEvent.timestamp)
                   onChange(new Date(data.nativeEvent.timestamp));
               }}
@@ -81,13 +79,11 @@ export default function TransactionAddScreen({
           rules={{
             required: true,
           }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value as string}
+          render={({ field }) => (
+            <AutocompleteField
+              field={field}
               placeholder="Category"
+              options={["Food", "Transport", "Entertainment"]}
             />
           )}
           name="category"
@@ -167,4 +163,6 @@ const styles = StyleSheet.create({
   input: {
     marginBottom: 8,
   },
+  resultList: {},
+  resultItem: {},
 });
