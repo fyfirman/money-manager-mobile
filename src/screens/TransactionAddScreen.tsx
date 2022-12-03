@@ -152,7 +152,7 @@ export default function TransactionAddScreen({
       <View>
         <Button
           title="Submit"
-          onPress={handleSubmit(onSubmit)}
+          onPress={handleSubmit(onSubmit as any)}
           disabled={!isValid}
         />
       </View>
