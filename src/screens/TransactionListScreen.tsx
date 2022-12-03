@@ -18,6 +18,10 @@ export default function TabOneScreen({
     navigation.navigate("TransactionAdd");
   };
 
+  const handleHeaderRowPress = (date: Date) => {
+    navigation.navigate("TransactionAdd", { date });
+  };
+
   return (
     <>
       <ScrollView style={styles.container}>
@@ -27,6 +31,7 @@ export default function TabOneScreen({
               date={new Date(date)}
               expenseAmount={0}
               style={{ marginTop: index > 0 ? 8 : 0 }}
+              onPress={() => handleHeaderRowPress(new Date(date))}
             />
             {transactionListGroupByDate[date].map((transaction, index) => (
               <TransactionRow

@@ -9,6 +9,7 @@ import { RootStackScreenProps } from "../../types";
 
 export default function TransactionAddScreen({
   navigation,
+  route,
 }: RootStackScreenProps<"TransactionAdd">) {
   const addTransaction = useTransactionStore((state) => state.addTransaction);
 
@@ -18,7 +19,7 @@ export default function TransactionAddScreen({
     formState: { isValid, errors },
   } = useForm({
     defaultValues: {
-      date: new Date(),
+      date: route.params?.date || new Date(),
       account: "",
       category: "",
       subCategory: "",

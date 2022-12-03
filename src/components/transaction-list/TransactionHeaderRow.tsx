@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Text, View, ViewProps } from "../Themed";
+import { Text, TouchableOpacity, View, TouchableOpacityProps } from "../Themed";
 import React from "react";
 import { format } from "date-fns";
 import { currencyFormat } from "../../helpers/string-helper";
@@ -7,21 +7,23 @@ import { currencyFormat } from "../../helpers/string-helper";
 interface TransactionHeaderRowProps {
   date: Date;
   expenseAmount: number;
-  style?: ViewProps["style"];
+  style?: TouchableOpacityProps["style"];
+  onPress?: TouchableOpacityProps["onPress"];
 }
 
 const TransactionHeaderRow = ({
   date,
   expenseAmount,
   style,
+  onPress,
 }: TransactionHeaderRowProps) => {
   return (
-    <View style={[styles.container, style]}>
+    <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
       <View style={styles.dateContainer}>
         <Text style={styles.dateText}>{format(date, "EEE, dd MMM yy")}</Text>
       </View>
       <Text>{currencyFormat(expenseAmount)}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
