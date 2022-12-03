@@ -63,7 +63,7 @@ const useTransactionStore = create<TransactionState>()(persist((set, get) => ({
     set(({transactions}) => ({transactions: [...transactions, transaction]}))
   },
   getTransactionsGroupByDate: () => {
-    const transactions = get().transactions;
+    const transactions = get().transactions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     return transactions.reduce((acc, transaction) => {
       const date = format(new Date(transaction.date), 'yyyy-MM-dd');
       if (!acc[date]) {
