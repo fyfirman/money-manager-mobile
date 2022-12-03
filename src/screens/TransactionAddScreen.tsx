@@ -4,8 +4,10 @@ import { TextInput, Button } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import ColumnInput from "../components/transaction-add/ColumnInput";
-import useTransactionStore, { Transaction } from "../store/transaction.store";
-import { RootStackScreenProps } from "../types";
+import useTransactionStore, {
+  Transaction,
+} from "../../store/transaction.store";
+import { RootStackScreenProps } from "../../types";
 
 export default function TransactionAddScreen({
   navigation,
